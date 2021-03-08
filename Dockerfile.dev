@@ -1,0 +1,24 @@
+
+FROM node:alpine AS build
+
+# Create app directory
+WORKDIR /usr/src/app
+
+ENV DOCKERIZE_VERSION v0.6.0
+RUN wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+
+
+COPY package*.json ./
+# set the path to make all 
+RUN npm install --silent
+
+ARG API_ENDPOINT
+ARG ENGINE_API_KEY
+
+# RUN chmod +x start.sh
+CMD dockerize -wait http://api:8080 \
+-timeout 60s \
+npx apollo client:download-schema --key ENGINE_API_KEY --endpoint http://api:8080/graphql ./src/generated/introspection-result.json && \ 
+npx react-scripts start

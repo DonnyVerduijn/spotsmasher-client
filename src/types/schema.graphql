@@ -1,0 +1,104 @@
+  input SearchFieldInput {
+    value: String
+    selectionStart: Int
+  }
+
+  type SearchField {
+    isVisible: Int
+    selectionStart: Int
+    value: String
+    lastChangedAt: Int
+  }
+
+  type LatLngBounds {
+    south: Float
+    west: Float
+    north: Float
+    east: Float
+  }
+
+  type SpotMap {
+    lastChangedAt: Int
+    zoom: Int
+    center: LatLng
+    bounds: LatLngBounds
+  }
+
+  type MenuItem {
+    id: ID
+    name: String
+    link: String
+  }
+
+  input SpotMapInput {
+    zoom: Int
+    center: LatLngInput
+    bounds: LatLngBoundsInput
+  }
+
+  input LatLngBoundsInput {
+    east: Float
+    west: Float
+    north: Float
+    south: Float 
+  }
+
+  type SpotSelection {
+    selected: [ID]
+  }
+
+  type FilterSheet {
+    isOpen: Boolean
+  }
+
+  type RangeFilter {
+    min: Int
+    max: Int
+    value: Int
+  }
+
+  enum OrderingFilterColumn {
+    TITLE
+    DISTANCE
+    CREATED_AT
+  }
+
+  enum OrderingFilterDirection {
+    ASC
+    DESC
+  }
+
+  type OrderingFilter {
+    column: OrderingFilterColumn
+    direction: OrderingFilterDirection
+  }
+
+  input OrderingFilterInput {
+    column: OrderingFilterColumn
+    direction: OrderingFilterDirection
+  }
+
+  type Drawer {
+    isOpen: Boolean
+  }
+
+  extend type Query {
+    SpotMap: SpotMap
+    
+  }
+
+  extend type Mutation {
+    updateSelectedPlace(input: PlaceInput): Place
+    updateSpotMap(input: SpotMapInput): SpotMap
+    updateAttributeValue(id: ID, value: Boolean): Attribute
+    updateRangeFilter(value: Int): RangeFilter
+    showMainMenu: Drawer
+    hideMainMenu: Drawer
+    toggleMainMenu: Drawer
+    showFilterSheet: FilterSheet
+    hideFilterSheet: FilterSheet
+    setOrderingFilter(input: OrderingFilterInput): OrderingFilter
+    addSpotToSelection(id: ID): SpotSelection
+    updateSearchField(isVisible: Boolean): SearchField
+  }
+

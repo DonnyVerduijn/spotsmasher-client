@@ -1,0 +1,4 @@
+[submodule "assets"]
+	path = assets
+	url = https://gitlab.com/spotsmasher/assets
+	branch = master

@@ -1,0 +1,8 @@
+/* styles for index.css (concerning root) */
+
+body {
+  margin: 0;
+  padding: 0 !important;
+  overflow-x: hidden;
+  overflow-y: auto !important;
+}

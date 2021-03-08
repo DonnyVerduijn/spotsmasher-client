@@ -1,0 +1,16 @@
+node_modules
+assets
+.dockerignore
+.env
+.eslintrc.js
+.gitignore
+.gitmodules
+.npmrc
+.prettierrc
+docker-compose.yml
+Dockerfile
+Dockerfile.dev
+License
+README.md
+start.sh
+TODO.md

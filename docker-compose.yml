@@ -1,0 +1,34 @@
+version: "3.3"
+
+services:
+  assets:
+    container_name: assets
+    build: 
+      context: ./assets
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - "8081:80"
+    volumes:
+      - ./assets/media:/var/www/media
+  client:
+    container_name: client
+    tty: true
+    build: 
+      context: ./
+      dockerfile: Dockerfile.dev
+      args:
+        API_ENDPOINT: http://api:8080
+        ENGINE_API_KEY: service:spotsmasher-api:RO7WH0Zzj2oJhM8qTVI3bA
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+networks:
+  default:
+    external:
+      name: spotsmasher
+volumes:
+  node_modules:
